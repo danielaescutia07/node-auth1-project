@@ -28,7 +28,7 @@ const { restricted } = require('../auth/auth-middleware');
   }
  */
 
-router.get('/', (req, res, next) => {
+router.get('/', restricted, (req, res, next) => {
   res.json('users')
 })
 
