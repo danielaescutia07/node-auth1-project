@@ -9,8 +9,11 @@ const User = require('../users/users-model');
   }
 */
 function restricted(req, res, next) {
-  console.log('Restricted middleware is kicking in!')
-  next()
+  if (req.session.user) {
+    next()
+  } else {
+    next({ status: 401, message: 'You shall not pass!'})
+  }
 }
 
 /*
