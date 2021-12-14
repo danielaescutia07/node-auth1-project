@@ -4,6 +4,12 @@ const express = require('express');
 
 const router = express.Router();
 
+const {
+  checkUsernameFree,
+  checkUsernameExists,
+  checkPasswordLength
+} = require('./auth-middleware');
+
 /**
   1 [POST] /api/auth/register { "username": "sue", "password": "1234" }
 
@@ -26,7 +32,7 @@ const router = express.Router();
     "message": "Password must be longer than 3 chars"
   }
  */
-router.post('/register', async (req, res, next) => {
+router.post('/register', checkPasswordLength, checkUsernameFree, async (req, res, next) => {
   try {
     res.json('register wired!')
   } catch (err) {
@@ -50,7 +56,7 @@ router.post('/register', async (req, res, next) => {
     "message": "Invalid credentials"
   }
  */
-router.post('/login', async (req, res, next) => {
+router.post('/login', checkUsernameExists, async (req, res, next) => {
   try {
     res.json('login wired')
   } catch (err) {
