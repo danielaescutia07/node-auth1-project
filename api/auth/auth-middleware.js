@@ -1,3 +1,5 @@
+
+
 /*
   If the user does not have a session saved in the server
 
@@ -6,8 +8,9 @@
     "message": "You shall not pass!"
   }
 */
-function restricted() {
-
+function restricted(req, res, next) {
+  console.log('Restricted middleware is kicking in!')
+  next()
 }
 
 /*
@@ -47,3 +50,7 @@ function checkPasswordLength() {
 }
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
+
+module.exports = {
+  restricted
+}

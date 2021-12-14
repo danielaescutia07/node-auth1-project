@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('./users-model');
-const restricted = require('../auth/auth-middleware');
+const { restricted } = require('../auth/auth-middleware');
 
 /**
   [GET] /api/users
@@ -29,14 +29,7 @@ const restricted = require('../auth/auth-middleware');
  */
 
 router.get('/', (req, res, next) => {
-  User.find()
-    .then(users => {
-      res.status(200).json(users)
-    })
-    .catch(next({
-      status: 401,
-      message: 'You shall not pass!'
-    }))
+  res.json('users')
 })
 
 
