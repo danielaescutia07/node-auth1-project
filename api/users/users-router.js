@@ -28,8 +28,13 @@ const { restricted } = require('../auth/auth-middleware');
   }
  */
 
-router.get('/', restricted, (req, res, next) => {
-  res.json('users')
+router.get('/', restricted, async (req, res, next) => {
+  try {
+    const users = await User.find()
+    res.json(users)
+  } catch (err) {
+    next(err)
+  }
 })
 
 
