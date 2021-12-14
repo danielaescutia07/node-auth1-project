@@ -4,6 +4,10 @@ const express = require('express');
 
 const router = express.Router();
 
+const User = require('../users/users-model');
+
+const bcrypt = require('bcryptjs');
+
 const {
   checkUsernameFree,
   checkUsernameExists,
@@ -32,12 +36,15 @@ const {
     "message": "Password must be longer than 3 chars"
   }
  */
-router.post('/register', checkPasswordLength, checkUsernameFree, async (req, res, next) => {
-  try {
-    res.json('register wired!')
-  } catch (err) {
-    next(err)
-  }
+router.post('/register', checkPasswordLength, checkUsernameFree, (req, res, next) => {
+  const { username, password } = req.body
+  const hash = bcrypt.hashSync(password, 8)
+
+  User.add({ username, password: hash })
+    .then(saved => {
+      res.status(201).json(saved)
+    })
+    .catch(next)
 })
 
 
